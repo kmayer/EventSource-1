@@ -246,7 +246,6 @@
       if (this.thisArg.headers !== undefined) {
         for (var header in this.thisArg.headers) {
           this.xhr.setRequestHeader(header, this.thisArg.headers[header]);
-          console.log("setRequestHeader", header, this.thisArg.headers[header])
         }
       }
     }
