@@ -242,6 +242,13 @@
       this.xhr.setRequestHeader("Accept", "text/event-stream");
       // Request header field Last-Event-ID is not allowed by Access-Control-Allow-Headers.
       //this.xhr.setRequestHeader("Last-Event-ID", this.lastEventId);
+      // non-standard extension: set headers in XHR
+      if (this.thisArg.headers !== undefined) {
+        for (var header in this.thisArg.headers) {
+          this.xhr.setRequestHeader(header, this.thisArg.headers[header]);
+          console.log("setRequestHeader", header, this.thisArg.headers[header])
+        }
+      }
     }
 
     try {
@@ -427,6 +434,12 @@
     this.url = url.toString();
     this.readyState = CONNECTING;
     this.withCredentials = isCORSSupported && options != undefined && Boolean(options.withCredentials);
+
+    // non-standard extension: set headers in XHR
+    if (options !== undefined) {
+      this.headers = options.headers;
+      delete options.headers;
+    }
 
     this.es = es;
     this.initialRetry = getDuration(1000, 0);
